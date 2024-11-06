@@ -1,0 +1,42 @@
+
+name: Python application
+
+# Triger the workflow on any push to the main branch or pull request
+on:
+  push:
+    branches: 
+    -main
+  pull_request:
+    branches:
+    -main" 
+
+# permissions:
+#   contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    #step_1:check out the code from the repository
+    # - uses: actions/checkout@v4
+    - name: check out code
+      uses: actions/checkout@v2
+
+      #step_2:seup python ENV
+      - name: set up python env
+        uses: actions/setup-python@v2
+        with:
+        python-version: "3.10"
+
+       # step_3 install dependenciss
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    # step_4 run tests
+    - name: Run test
+      run: pytest
+        
